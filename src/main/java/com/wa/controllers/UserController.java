@@ -1,25 +1,62 @@
 package com.wa.controllers;
 
+import com.wa.domain.Note;
+import com.wa.domain.User;
+import com.wa.services.NoteService;
 import com.wa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by jt on 1/10/17.
- */
-@Controller
+@RestController
+@RequestMapping("/api")
 public class UserController {
     private UserService userService;
+
+    private NoteService noteService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping("/")
-    public String redirToList(){
-        return "redirect:/user/list";
+    @Autowired
+    public void getNoteService(NoteService noteService) {
+        this.noteService = noteService;
+    }
+
+    @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
+    public String redirToList() {
+        return "hello ";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public ResponseEntity<?> createUser(@RequestBody User userParam) {
+        User user = new User();
+        user.setUserName(userParam.getUserName());
+        user.setPassword(userParam.getPassword());
+        userService.saveOrUpdate(user);
+
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/addNote", method = RequestMethod.POST)
+    public ResponseEntity<?> addNote(@RequestBody Note noteParam) {
+        Note note = new Note();
+        note.setHeading(noteParam.getHeading());
+        note.setNoteDate(noteParam.getNoteDate());
+        note.setUserId(noteParam.getUserId());
+
+        noteService.saveOrUpdate(note);
+
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
 //    @RequestMapping({"/product/list", "/product"})

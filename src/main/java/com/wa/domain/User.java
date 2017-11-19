@@ -1,26 +1,33 @@
 package com.wa.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
-@Table(name = "lsodaosd")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long _id;
+    private long userId;
     private String userName;
     private String password;
 
-    public Long getId() {
-        return _id;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore(true)
+    private List<Note> noteList;
+
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this._id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
