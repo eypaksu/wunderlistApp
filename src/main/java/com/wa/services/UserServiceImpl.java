@@ -27,7 +27,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveOrUpdate(User user) {
+    public User saveOrUpdate(User userParam) {
+        User user = new User();
+        user.setUserName(userParam.getUserName());
+        user.setPassword(userParam.getPassword());
         userRepository.save(user);
         return user;
     }

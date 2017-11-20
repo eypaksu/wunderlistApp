@@ -32,48 +32,30 @@ public class UserController {
 
     @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
     public String redirToList() {
-        return "hello ";
+        return "welcome wunderlistApp ";
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User userParam) {
-        User user = new User();
-        user.setUserName(userParam.getUserName());
-        user.setPassword(userParam.getPassword());
-        userService.saveOrUpdate(user);
-
+        userService.saveOrUpdate(userParam);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/addNote", method = RequestMethod.POST)
     public ResponseEntity<?> addNote(@RequestBody Note noteParam) {
-        Note note = new Note();
-        note.setHeading(noteParam.getHeading());
-        note.setNoteDate(noteParam.getNoteDate());
-        note.setUser(userService.findById(noteParam.getUser().getUserId()));
+        noteService.saveOrUpdate(noteParam);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
 
-        noteService.saveOrUpdate(note);
+    @RequestMapping(value = "/getNoteList", method = RequestMethod.GET)
+    public ResponseEntity<?> getNoteLOst(@RequestBody String username) {
 
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
-//    @RequestMapping({"/product/list", "/product"})
-//    public String listProducts(Model model){
-//        model.addAttribute("products", userService.listAll());
-//        return "product/list";
-//    }
-//
-//    @RequestMapping("/product/show/{id}")
-//    public String getProduct(@PathVariable String id, Model model){
-//        model.addAttribute("product", userService.getById(Long.valueOf(id)));
-//        return "product/show";
-//    }
-//
-//    @RequestMapping("/product/delete/{id}")
-//    public String delete(@PathVariable String id){
-//        userService.delete(Long.valueOf(id));
-//        return "redirect:/product/list";
-//    }
+
+
 }
