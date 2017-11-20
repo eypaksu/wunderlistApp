@@ -1,6 +1,8 @@
 package com.wa.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,10 +14,11 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String noteId;
     private String heading;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     private LocalDateTime noteDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="userId")
-    private User userId;
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 
     public String getNoteId() {
         return noteId;
@@ -41,11 +44,11 @@ public class Note {
         this.noteDate = noteDate;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

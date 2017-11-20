@@ -51,7 +51,7 @@ public class UserController {
         Note note = new Note();
         note.setHeading(noteParam.getHeading());
         note.setNoteDate(noteParam.getNoteDate());
-        note.setUserId(noteParam.getUserId());
+        note.setUser(userService.findById(noteParam.getUser().getUserId()));
 
         noteService.saveOrUpdate(note);
 

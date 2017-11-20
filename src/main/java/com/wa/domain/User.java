@@ -4,7 +4,8 @@ package com.wa.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -16,11 +17,10 @@ public class User {
     private long userId;
     private String userName;
     private String password;
-
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore(true)
-    private List<Note> noteList;
+    private Set<Note> notes = new HashSet<Note>(
+            0);
 
     public long getUserId() {
         return userId;
@@ -44,5 +44,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Set<Note> notes) {
+        this.notes = notes;
     }
 }
