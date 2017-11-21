@@ -3,10 +3,10 @@ package com.wa.services;
 import com.wa.domain.User;
 import com.wa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -14,12 +14,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public List<User> listAll() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add); //fun with Java 8
-        return users;
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
+
 
     @Override
     public User findById(Long id) {
@@ -27,18 +26,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveOrUpdate(User userParam) {
+    public void saveOrUpdate(User userParam) {
+        userRepository.save(createUserObject(userParam));
+    }
+
+    public User createUserObject(User userParam){
         User user = new User();
-        user.setUserName(userParam.getUserName());
-        user.setPassword(userParam.getPassword());
-        userRepository.save(user);
+        user.setUsername(userParam.getUsername());
+        user.setPassword(getPasswordEncoder().encode(userParam.getPassword()));
+
         return user;
     }
 
-    @Override
-    public void delete(Long id) {
-        userRepository.delete(id);
-
-    }
 
 }

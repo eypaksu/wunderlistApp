@@ -6,8 +6,8 @@ import com.wa.domain.User;
 import java.util.List;
 
 public interface NoteService {
-    List<Note> getNoteListByUser(User user);
+    List<Note> getNoteListByUserId(Long userId);
 
-    Note saveOrUpdate(Note note);
+    void saveOrUpdate(Note note);
 
 }

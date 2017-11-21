@@ -1,7 +1,11 @@
 package com.wa.repositories;
 
 import com.wa.domain.Note;
-import org.springframework.data.repository.CrudRepository;
+import com.wa.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface NoteRepository extends CrudRepository<Note, Long> {
+import java.util.List;
+
+public interface NoteRepository extends JpaRepository<Note, Long> {
+    List<Note> findByUser(User user);
 }

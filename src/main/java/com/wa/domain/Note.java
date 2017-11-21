@@ -14,6 +14,7 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String noteId;
     private String heading;
+    private String note;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     private LocalDateTime noteDate;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -50,5 +51,13 @@ public class Note {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
