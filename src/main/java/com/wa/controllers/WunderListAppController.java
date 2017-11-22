@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class WunderListAppController {
     private UserService userService;
 
@@ -33,13 +32,13 @@ public class WunderListAppController {
         return "welcome wunderlistApp ";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/addUser", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User userParam) {
         userService.saveOrUpdate(userParam);
         return new ResponseEntity<String>("User created successfully", HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/addNote", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/addNote", method = RequestMethod.POST)
     public ResponseEntity<?> addNote(@RequestBody Note noteParam) {
         noteService.saveOrUpdate(noteParam);
         return new ResponseEntity<String>("Note added successfully", HttpStatus.CREATED);
