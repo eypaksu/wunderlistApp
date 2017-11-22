@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.lang.reflect.InvocationTargetException;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class UserServiceTest {
@@ -24,7 +22,7 @@ public class UserServiceTest {
     private UserServiceImpl userServiceImpl;
 
     @Test
-    public void saveUserTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void saveUserTest() {
 
         User userAsParam = new User();
 

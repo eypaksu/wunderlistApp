@@ -24,20 +24,22 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<Note> getNoteListByUserId(Long userId) {
-
         User user = userService.findById(userId);
-
         return noteRepository.findByUser(user);
     }
 
     public Note createNoteToSave(Note noteParam) {
         Note note = new Note();
-        note.setUser(userService.findById(noteParam.getUser().getUserId()));
+        note.setUser(getUser(noteParam.getUser().getUserId()));
         note.setHeading(noteParam.getHeading());
         note.setNote(noteParam.getNote());
         note.setNoteDate(noteParam.getNoteDate());
 
         return note;
+    }
+
+    public User getUser(Long userId){
+        return userService.findById(userId);
     }
 
 
